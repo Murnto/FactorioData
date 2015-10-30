@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include layout/head.ejs %>
+</head>
+<body>
+<% include layout/header.ejs %>
+<div class="container">
+    <h1><%- embedImg('technology', name, 'tech-img') %> <%= title %></h1>
+    <div class="tech-units">
+        <div class="tech-ingd">
+            <%
+            for (var idxIng = 0; idxIng < tech.unit.ingredients.length; idxIng++) {
+                var ingd = tech.unit.ingredients[idxIng]; %>
+            <%= ingd[2] %>x <%- embedItemPopover(ingd[1]) %>
+            <% } %>
+        </div>
+        x <%= tech.unit.count %>
+    </div>
+
+    <h3>Requires</h3>
+    <% for (var prereq in tech.prerequisites) {
+        var prereqName = tech.prerequisites[prereq]; %>
+    <div>
+        <a href="./<%= prereqName %>">
+            <%- embedImg('technology', prereqName, 'tech-img') %>
+            <%= prereqTitles[prereq] %>
+        </a>
+    </div>
+    <% } %>
+    <br>
+
+    <% if (tech.allows.length) { %>
+    <h3>Allows</h3>
+    <% for (var allow in tech.allows) {
+        var allowName = tech.allows[allow]; %>
+    <div>
+        <a href="./<%= allowName %>">
+            <%- embedImg('technology', allowName, 'tech-img') %>
+            <%= allowsTitles[allow] %>
+        </a>
+    </div>
+    <% } %>
+    <% } %>
+    <br>
+
+    <% if (tech.effects && tech.effects.length) { %>
+    <h3>Unlocks</h3>
+    <% for (var effect in tech.effects) {
+        var effect = tech.effects[effect]; %>
+    <div>
+        <% if (effect.type == 'unlock-recipe') {
+            var r = recipeByName(effect.recipe);
+            if (!r) {
+                console.log('Skipping', effect.recipe);
+                continue;
+            }
+            var c = findCraftableByName(r.results[0].name); %>
+            <a href="/pack/<%= modpack %>/i/<%= c.type %>/<%= c.name %>">
+            <%- embedImg(c.type, c.name) %>
+            <%= findTitle(r.name) %>
+        </a>
+        <% } else { %>
+        <%= JSON.stringify(effect) %>
+        <% } %>
+    </div>
+    <% } %>
+    <% } %>
+
+</div>
+
+<footer>
+    <% include layout/footer.ejs %>
+</footer>
+
+</body>
+</html>

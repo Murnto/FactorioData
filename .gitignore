@@ -1,0 +1,10 @@
+.idea
+bower_components
+node_modules
+public/**/*.js
+jscode/**/*.js
+routes/**/*.js
+helpers.js
+_ts_refs.js
+public/pack
+public/css/style.css

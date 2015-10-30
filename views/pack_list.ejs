@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include layout/head.ejs %>
+</head>
+<body>
+<% include layout/header.ejs %>
+<div class="container">
+    <table class="table" id="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Description</th>
+                <th>Mods</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% for (var i in packInfos) {
+            var pack = packInfos[i]; %><tr>
+            <td><a href="/pack/<%= pack.name %>"><%= pack.title %></a></td>
+            <td><%= pack.version %></td>
+            <td><%= pack.description %></td>
+            <td>
+                <%= pack.mods.join(', ') %>
+            </td>
+        </tr>
+        <% }%>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <% include layout/footer.ejs %>
+</footer>
+
+</body>
+</html>
