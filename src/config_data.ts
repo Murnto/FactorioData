@@ -6,7 +6,8 @@ var CategoryData = require('./category_data').CategoryData;
 var async = require("async");
 var fs = require("fs");
 var ini = require('ini');
-var THINGS = [
+
+var ENTITY_TYPES = [
     'item',
     'capsule',
     'fluid',
@@ -75,8 +76,9 @@ class ConfigData {
             if (r.result == name) {
                 results.push(r);
             } else if (r.results) {
-                for (var result in r.results) {
-                    result = r.results[result];
+                for (var resIdx = 0; resIdx < r.results.length; resIdx++) {
+                    var result = r.results[resIdx];
+
                     if (result.name == name) {
                         results.push(r);
                         break;
@@ -120,9 +122,11 @@ class ConfigData {
     }
 
     findCraftableByName(name) {
-        for (var c in THINGS) {
-            if (this.data[THINGS[c]][name]) {
-                return this.data[THINGS[c]][name]
+        for (var typeidx = 0; typeidx < ENTITY_TYPES.length; typeidx++) {
+            var entityType = ENTITY_TYPES[typeidx];
+
+            if (this.data[entityType][name]) {
+                return this.data[entityType][name]
             }
         }
         return name;
@@ -142,35 +146,37 @@ class ConfigData {
         return recipes[0];
     }
 
-    _lookupTitleByName(name) {
+    _lookupTitleByName(name:string):string {
         return this.locale['entity-name'][name] || this.locale['item-name'][name] || this.locale['fluid-name'][name] || this.locale['recipe-name'][name] || this.locale['technology-name'][name] || this.locale['equipment-name'][name] || this.locale['tile-name'][name] || name;
     }
 
-    findTitle(name) {
+    findTitle(name:string):string {
         var title = this._lookupTitleByName(name);
         if (title !== name) {
             return title;
         }
 
-        title = title.split('-');
-        var localeNum = title[title.length - 1];
-        if (localeNum * 1 == localeNum) {
-            title.splice(title.length - 1, 1);
-            title = title.join('-');
+        var tsplit = title.split('-');
+        var localeNum = tsplit[tsplit.length - 1];
+        if (<any>localeNum * 1 == <any>localeNum) { // check if this is a technology level name
+            tsplit.splice(tsplit.length - 1, 1);
+            title = tsplit.join('-');
             return this._lookupTitleByName(title) + ' ' + localeNum;
         }
-        return title;
+        return name;
     }
 
-    searchNameTitle(name) {
+    searchNameTitle(name:string) {
         var results = [];
         name = name.toLowerCase();
-        for (var k in THINGS) {
-            k = THINGS[k];
-            for (var i in this.data[k]) {
-                i = this.data[k][i];
-                if (i.name.indexOf(name) !== -1) {
-                    results.push(i);
+        for (var typeidx = 0; typeidx < ENTITY_TYPES.length; typeidx++) {
+            var entityType = ENTITY_TYPES[typeidx];
+
+            for (var i = 0; i < this.data[entityType].length; i++) {
+                var entityDef = this.data[entityType][i];
+
+                if (entityDef.name.indexOf(name) !== -1) {
+                    results.push(entityDef);
                 }
             }
         }
