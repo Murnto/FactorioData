@@ -33,7 +33,7 @@ function loadPacks() {
 }
 
 function loadPack(packid, name) {
-    var pack = new config_data.ConfigData(packid, name, '../pack/' + packid);
+    var pack = new config_data.ConfigData(packid, name, 'public/pack/' + packid);
     packs[packid] = pack;
     return pack;
 }
