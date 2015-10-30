@@ -2,7 +2,7 @@
 
 var express = require('express');
 export var router = express.Router();
-import FData = require('../jscode/factorio_data');
+import FData = require('../src/factorio_data');
 
 router.get('/', function(req, res, next) {
     var defaultPack = FData.getPack('default');

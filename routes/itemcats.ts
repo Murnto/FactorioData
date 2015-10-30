@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-import FData = require('../jscode/factorio_data');
+import FData = require('../src/factorio_data');
 
 router.get('/:cat', function(req, res, next) {
     var catdata = FData.getPack(res.locals.modpack).catdata;

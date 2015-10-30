@@ -1,15 +1,16 @@
 /// <reference path="./typings/tsd.d.ts" />
-import FData = require('./jscode/factorio_data');
+
+import FactorioData = require('./src/factorio_data');
 
 function packUrl(_pack_name_) {
     return '/pack/' + _pack_name_;
 }
 
 function findTitle(_pack_name_, name) {
-    return FData.getPack(_pack_name_).findTitle(name);
+    return FactorioData.getPack(_pack_name_).findTitle(name);
 }
 function findCraftableByName(_pack_name_, name) {
-    return FData.getPack(_pack_name_).findCraftableByName(name);
+    return FactorioData.getPack(_pack_name_).findCraftableByName(name);
 }
 function getImgUrl(_pack_name_, type, name) {
     return packUrl(_pack_name_) + "/icon/" + type + "/" + name + ".png";
@@ -29,20 +30,20 @@ function itemCount(_pack_name_, count, type, name) {
     //return "<div class=\"item-count\">" + app.locals.embedImg(type, name) + "<div>" + count + "</div></div>";
 }
 function itemGroupImage(_pack_name_, group) {
-    if (FData.getPack(_pack_name_).data['item-subgroup'][group]) {
-        return packUrl(_pack_name_) + '/icon/item-group/' + FData.getPack(_pack_name_).data['item-subgroup'][group].group + ".png";
+    if (FactorioData.getPack(_pack_name_).data['item-subgroup'][group]) {
+        return packUrl(_pack_name_) + '/icon/item-group/' + FactorioData.getPack(_pack_name_).data['item-subgroup'][group].group + ".png";
     }
 }
 function recipeByName(_pack_name_, name) {
-    return FData.getPack(_pack_name_).data.recipe[name];
+    return FactorioData.getPack(_pack_name_).data.recipe[name];
 }
 function popoverAnchorStart(_pack_name_, name, type?) {
-    var craftable = FData.getPack(_pack_name_).findCraftableByName(name);
+    var craftable = FactorioData.getPack(_pack_name_).findCraftableByName(name);
     type = type || craftable.type;
     return '<a href="' + packUrl(_pack_name_) + '/i/' + type + '/' + craftable.name + '" title="' + craftable.title + '" data-trigger="hover" data-item-type="' + type + '" data-item-name="' + name + '">';
 }
 function embedItemPopover(_pack_name_, name, type?) {
-    var craftable = FData.getPack(_pack_name_).findCraftableByName(name);
+    var craftable = FactorioData.getPack(_pack_name_).findCraftableByName(name);
     type = type || craftable.type;
     return popoverAnchorStart(_pack_name_, name, type) + embedImg(_pack_name_, type, name) + '</a>';
 }

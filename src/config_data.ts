@@ -28,7 +28,7 @@ interface ConfigInfo {
     mods: Array<string>;
 }
 
-export class ConfigData {
+class ConfigData {
     data:any;
     info:ConfigInfo;
     locale:any;
@@ -179,4 +179,4 @@ export class ConfigData {
 
 }
 
-
+export = ConfigData

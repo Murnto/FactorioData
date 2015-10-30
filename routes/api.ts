@@ -3,7 +3,7 @@
 var express = require('express');
 var fs = require('fs');
 var router = express.Router();
-import FData = require('../jscode/factorio_data');
+import FData = require('../src/factorio_data');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
