@@ -1,5 +1,3 @@
-tsc build.ts --module commonjs
-stylus public/css/style.styl
-#grunt
+./build.sh
 NODE_ENV=production PORT=52679 bin/www
 
