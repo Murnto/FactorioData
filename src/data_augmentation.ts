@@ -4,24 +4,15 @@ export function augmentData(cfgd:ConfigData) {
     preProcessData(cfgd);
     unifyRecipeResults(cfgd);
     unifyRecipeIngredients(cfgd);
-    //export var keysData = Object.keys(data);
-    //export var keysRecipe = Object.keys(data.recipe);
-    //export var keysAssem = Object.keys(data['assembling-machine']);
-    //export var keysFurn = Object.keys(data.furnace);
-    //export var keysItem = Object.keys(data.item);
-    //export var keysFluid = Object.keys(data.fluid);
     cfgd.craftCatMap = mapAssemblers(cfgd);
     mapRecipeCatAssemblers(cfgd, cfgd.craftCatMap);
     attachLocaleToData(cfgd);
     augmentTech(cfgd);
-    //keysData.splice(keysData.indexOf('autoplace-control'), 1);
-    //keysData.splice(keysData.indexOf('noise-layer'), 1);
-    //keysData.splice(keysData.indexOf('recipe'), 1);
-    //keysData.splice(keysData.indexOf('noise_layer'), 1);
 }
 
 function preProcessData(cfgd) {
     var data = cfgd.data;
+
     _preProcessData(data.technology, 'prerequisites');
     _preProcessData(data.technology, 'effects');
     _preProcessData(data.technology, 'unit', 'ingredients');
@@ -94,23 +85,23 @@ function unifyRecipeIngredients(cfgd) {
         var r = data.recipe[recipeKeys[i]];
 
         if (r.ingredients.length && r.ingredients[0]["1"]) {
-            var ingds = [];
+            var fixed_ingredients = [];
 
             for (var j = 0; j < r.ingredients.length; j++) {
-                var ing = r.ingredients[j];
+                var ingd = r.ingredients[j];
 
-                if (ing["1"]) {
-                    ingds.push({
-                        name: ing["1"],
-                        amount: ing["2"],
-                        type: cfgd.findCraftableByName(ing["1"]).type
+                if (ingd["1"]) {
+                    fixed_ingredients.push({
+                        name: ingd["1"],
+                        amount: ingd["2"],
+                        type: cfgd.findCraftableByName(ingd["1"]).type
                     })
                 } else {
-                    ingds.push(ing)
+                    fixed_ingredients.push(ingd)
                 }
             }
 
-            r.ingredients = ingds;
+            r.ingredients = fixed_ingredients;
         }
     }
 }
@@ -120,16 +111,16 @@ function augmentTech(cfgd) {
     var techKeys = Object.keys(data.technology);
     var recipeKeys = Object.keys(data.recipe);
 
-    for (var key in techKeys) {
-        data.technology[techKeys[key]].allows = [];
+    for (var keyIdx = 0; keyIdx < techKeys.length; keyIdx++) {
+        data.technology[techKeys[keyIdx]].allows = [];
     }
 
-    for (var key in recipeKeys) {
-        data.recipe[recipeKeys[key]].unlock_by = [];
+    for (var keyIdx = 0; keyIdx < recipeKeys.length; keyIdx++) {
+        data.recipe[recipeKeys[keyIdx]].unlock_by = [];
     }
 
-    for (var key in techKeys) {
-        var tech = data.technology[techKeys[key]];
+    for (var keyIdx = 0; keyIdx < techKeys.length; keyIdx++) {
+        var tech = data.technology[techKeys[keyIdx]];
 
         for (var i = 0; tech.effects && i < tech.effects.length; i++) {
             var effect = tech.effects[i];
