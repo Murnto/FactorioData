@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 import FData = require('../src/factorio_data');
 
-router.get('/i/:type/:name', function(req, res, next) {
+router.get('/i/:type/:name', function (req, res, next) {
     var name = req.params.name;
     var type = req.params.type;
 
@@ -17,7 +17,7 @@ router.get('/i/:type/:name', function(req, res, next) {
     });
 });
 
-router.get('/recipecat/:name', function(req, res, next) {
+router.get('/recipecat/:name', function (req, res, next) {
     var name = req.params.name;
 
     res.render('assem_map', {
@@ -27,7 +27,7 @@ router.get('/recipecat/:name', function(req, res, next) {
     });
 });
 
-router.get('/tech', function(req, res, next) {
+router.get('/tech', function (req, res, next) {
 
     res.render('tech_list', {
         title: 'Technologies',
@@ -35,7 +35,7 @@ router.get('/tech', function(req, res, next) {
     });
 });
 
-router.get('/tech/:name', function(req, res, next) {
+router.get('/tech/:name', function (req, res, next) {
     var name = req.params.name;
 
     var tech = FData.getPack(res.locals.modpack).data.technology[name];
@@ -62,8 +62,8 @@ router.get('/tech/:name', function(req, res, next) {
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Factorio Data' });
+router.get('/', function (req, res, next) {
+    res.render('index', {title: 'Factorio Data'});
 });
 
 module.exports = router;

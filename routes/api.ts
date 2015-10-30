@@ -6,11 +6,11 @@ var router = express.Router();
 import FData = require('../src/factorio_data');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+router.get('/', function (req, res, next) {
+    res.render('index', {title: 'Express'});
 });
 
-router.get('/find/:name', function(req, res, next) {
+router.get('/find/:name', function (req, res, next) {
     var name = req.params.name;
     var results = [];
 
@@ -32,18 +32,18 @@ router.get('/find/:name', function(req, res, next) {
     res.end();
 });
 
-router.get('/find/', function(req, res, next) {
+router.get('/find/', function (req, res, next) {
     res.send([]);
     res.end();
 });
 
-router.get('/recipe/:name', function(req, res, next) {
+router.get('/recipe/:name', function (req, res, next) {
     var name = req.params.name;
     res.send(FData.getPack(res.locals.modpack).data.recipe[name]);
     res.end();
 });
 
-router.get('/result/:name', function(req, res, next) {
+router.get('/result/:name', function (req, res, next) {
     var name = req.params.name;
 
     var results = FData.getPack(res.locals.modpack).recipesWithResult(name);
@@ -52,7 +52,7 @@ router.get('/result/:name', function(req, res, next) {
     res.end();
 });
 
-router.get('/popup/:type/:name', function(req, res, next) {
+router.get('/popup/:type/:name', function (req, res, next) {
     var name = req.params.name;
     var type = req.params.type;
 

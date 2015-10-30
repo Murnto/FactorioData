@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 import FData = require('../src/factorio_data');
 
-router.get('/:cat', function(req, res, next) {
+router.get('/:cat', function (req, res, next) {
     var catdata = FData.getPack(res.locals.modpack).catdata;
     var cat = req.params.cat;
 
@@ -25,7 +25,7 @@ router.get('/:cat', function(req, res, next) {
     });
 });
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     var catdata = FData.getPack(res.locals.modpack).catdata;
     res.render('itemcat/index', {
         title: 'Item Categories',

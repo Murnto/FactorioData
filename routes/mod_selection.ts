@@ -4,7 +4,7 @@ var express = require('express');
 export var router = express.Router();
 import FData = require('../src/factorio_data');
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     var defaultPack = FData.getPack('default');
     res.render('pack_list', {
         title: 'Configurations',
@@ -15,9 +15,9 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/:pack', function(req, res, next) {
+router.get('/:pack', function (req, res, next) {
     var pack = req.params.pack;
-    if(req.url.substr(-1) != '/') {
+    if (req.url.substr(-1) != '/') {
         res.redirect(301, '/pack/' + pack + '/')
     } else {
         next();

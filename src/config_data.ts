@@ -36,7 +36,7 @@ class ConfigData {
     recipeTechUnlock:any = {};
     catdata:any;
 
-    constructor(public packid: string, public packName: string, public packPath: string) {
+    constructor(public packid:string, public packName:string, public packPath:string) {
         var that = this;
         async.parallel([
             function (cb) {
@@ -154,7 +154,7 @@ class ConfigData {
 
         title = title.split('-');
         var localeNum = title[title.length - 1];
-        if (localeNum * 1== localeNum) {
+        if (localeNum * 1 == localeNum) {
             title.splice(title.length - 1, 1);
             title = title.join('-');
             return this._lookupTitleByName(title) + ' ' + localeNum;

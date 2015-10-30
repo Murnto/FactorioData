@@ -142,7 +142,7 @@ function augmentTech(cfgd) {
             }
         }
 
-        for (var i = 0 ; tech.prerequisites && i < tech.prerequisites.length; i++) {
+        for (var i = 0; tech.prerequisites && i < tech.prerequisites.length; i++) {
             var prereq = tech.prerequisites[i];
             data.technology[prereq].allows.push(tech.name);
         }
