@@ -166,16 +166,25 @@ class ConfigData {
         return name;
     }
 
-    searchNameTitle(name:string) {
+    /**
+     * Search entities by name or title
+     * @param name or title
+     * @returns {Array}
+     */
+    searchEntities(name:string) {
         var results = [];
         name = name.toLowerCase();
         for (var typeidx = 0; typeidx < ENTITY_TYPES.length; typeidx++) {
             var entityType = ENTITY_TYPES[typeidx];
 
-            for (var i = 0; i < this.data[entityType].length; i++) {
-                var entityDef = this.data[entityType][i];
+            for (var entName in this.data[entityType]) {
+                if (!this.data[entityType].hasOwnProperty(entName)) {
+                    continue;
+                }
+                var entityDef = this.data[entityType][entName];
 
-                if (entityDef.name.indexOf(name) !== -1) {
+                if (entityDef.name.indexOf(name) !== -1
+                    || entityDef.title.toLowerCase().indexOf(name) !== -1) {
                     results.push(entityDef);
                 }
             }

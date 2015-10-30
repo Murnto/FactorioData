@@ -14,7 +14,7 @@ router.get('/find/:name', function (req, res, next) {
     var name = req.params.name;
     var results = [];
 
-    var tmp = FData.getPack(res.locals.modpack).searchNameTitle(name);
+    var tmp = FData.getPack(res.locals.modpack).searchEntities(name);
     for (var t in tmp) {
         t = tmp[t];
         results.push({
