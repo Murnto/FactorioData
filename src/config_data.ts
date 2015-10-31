@@ -11,6 +11,7 @@ var ENTITY_TYPES = [
     'item',
     'capsule',
     'fluid',
+    'tool',
     'gun',
     'ammo',
     'armor',
@@ -125,7 +126,7 @@ class ConfigData {
         for (var typeidx = 0; typeidx < ENTITY_TYPES.length; typeidx++) {
             var entityType = ENTITY_TYPES[typeidx];
 
-            if (this.data[entityType][name]) {
+            if (this.data[entityType] && this.data[entityType][name]) {
                 return this.data[entityType][name]
             }
         }
@@ -176,6 +177,9 @@ class ConfigData {
         name = name.toLowerCase();
         for (var typeidx = 0; typeidx < ENTITY_TYPES.length; typeidx++) {
             var entityType = ENTITY_TYPES[typeidx];
+            if (!this.data[entityType]) {
+                continue;
+            }
 
             for (var entName in this.data[entityType]) {
                 if (!this.data[entityType].hasOwnProperty(entName)) {
