@@ -1,6 +1,7 @@
 # FactorioData
 
-Until the pack generator is cleaned up [Factorio-PackData](https://github.com/Murnto/Factorio-PackData) will need to be used.
+Pack data for the vanilla F11 and F12 available in [Factorio-PackData](https://github.com/Murnto/Factorio-PackData).
+Alternatively, generate custom packs with mods using [Factorio-PackGen](https://github.com/Murnto/Factorio-PackGen).
 
 ### Usage
 ``` bash
