@@ -5,6 +5,7 @@
 /// <reference path="routes/mod_selection.ts" />
 /// <reference path="public/js/table.ts" />
 /// <reference path="public/js/item_info.ts" />
+/// <reference path="src/git_locals.ts" />
 /// <reference path="src/factorio_data.ts" />
 /// <reference path="src/category_data.ts" />
 /// <reference path="src/config_data.ts" />

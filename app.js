@@ -4,6 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 
 var modSelection = require('./routes/mod_selection');
+var gitLocals = require('./src/git_locals');
 var routes = require('./routes/index');
 var itemCats = require('./routes/itemcats');
 var api = require('./routes/api').router;
@@ -18,6 +19,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 
+app.use(gitLocals);
 app.use('/pack', modSelection.router);
 app.use(modSelection.modSelection);
 app.use(express.static(path.join(__dirname, 'public')));
