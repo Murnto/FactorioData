@@ -1,14 +1,15 @@
 /// <reference path="./category_data_infos.ts" />
 
-var CATEGORIES = require('./category_data_infos');
+var getCategories = require('./category_data_infos');
 
 export class CategoryData {
     actual_categories:any = [];
+    CATEGORIES:any = getCategories();
 
     constructor(raw_data:any) {
-        var keys = Object.keys(CATEGORIES);
+        var keys = Object.keys(this.CATEGORIES);
         for (var i = 0; i < keys.length; i++) {
-            var v = CATEGORIES[keys[i]];
+            var v = this.CATEGORIES[keys[i]];
             extractHeaders(v.info, v.headers = []);
 
             v.data = [];
