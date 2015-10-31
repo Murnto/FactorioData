@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    .container
+        h2= title
+        table#table.sortable-theme-bootstrap(data-sortable="")
+            thead
+                tr
+                    th Icon
+                    th Name
+                    th Energy
+                    th Craft Speed
+            tbody
+                for assembler in assemMap
+                    tr
+                        td!= embedImg('item', assembler.name)
+                        td
+                            a(href="/pack/#{ modpack }/i/item/#{ assembler.name }")
+                                = assembler.title
+                        td= assembler.energy_usage
+                        td= assembler.crafting_speed

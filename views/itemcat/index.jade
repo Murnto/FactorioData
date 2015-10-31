@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    .container
+        h2 Item Categories
+        h5.text-warning This section is still very much in progress.
+        table#table.table
+            thead
+                tr
+                    th Icon
+                    th Name
+            tbody
+                each icat in itemcats
+                    tr
+                        td!= embedImg(icat.icon_type, icat.icon_name)
+                        td
+                            a(href="/pack/#{ modpack }/itemcats/#{ icat.name }") #{icat.title}

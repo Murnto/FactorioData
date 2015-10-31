@@ -13,7 +13,7 @@ app.use(require('./helpers'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
 
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -52,8 +52,8 @@ if (app.get('env') === 'development') {
             extended_message: err.extended_message,
             error: err,
             title: (err.status || 500) + ': ' + err.message,
-            modpack: undefined,
-            modpack_title: undefined
+            modpack: res.locals.modpack,
+            modpack_title: res.locals.modpack_title
         });
     });
 }
@@ -67,8 +67,8 @@ app.use(function (err, req, res, next) {
         extended_message: err.extended_message,
         error: {},
         title: (err.status || 500) + ': ' + err.message,
-        modpack: undefined,
-        modpack_title: undefined
+        modpack: res.locals.modpack,
+        modpack_title: res.locals.modpack_title
     });
 });
 

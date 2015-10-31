@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    .container
+        h1
+            != embedImg('technology', name, 'tech-img')
+            |  #{ title }
+        .tech-units
+            .tech-ingd
+                each ingd in tech.unit.ingredients
+                    | #{ ingd[2] }x !{ embedItemPopover(ingd[1]) }
+                    = ' '
+            |  x #{ tech.unit.count }
+        h3 Requires
+        each prereq in Object.keys(tech.prerequisites)
+            - var prereqName = tech.prerequisites[prereq]
+            div
+                a(href="./#{ prereqName }")
+                    != embedImg('technology', prereqName, 'tech-img')
+                    |  #{ prereqTitles[prereq] }
+        br
+        if tech.allows.length
+            h3 Allows
+            each allow in Object.keys(tech.allows)
+                - var allowName = tech.allows[allow]
+                div
+                    a(href="./#{ allowName }")
+                        != embedImg('technology', allowName, 'tech-img')
+                        |  #{ allowsTitles[allow] }
+        br
+        if tech.effects && tech.effects.length
+            h3 Unlocks
+            each effect in tech.effects
+                div
+                    if effect.type == 'unlock-recipe'
+                        - var r = recipeByName(effect.recipe)
+                        if !r
+                            | ?
+                            = JSON.stringify(effect.recipe)
+                        else
+                            - var c = findCraftableByName(r.results[0].name)
+                            a(href="/pack/#{ modpack }/i/#{ c.type }/#{ c.name }")
+                                != embedImg(c.type, c.name)
+                                |  #{ findTitle(r.name) }
+                    else
+                        = JSON.stringify(effect)

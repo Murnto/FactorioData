@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+    .container
+        h2= title
+        table#table.sortable-theme-bootstrap(data-sortable="")
+            thead
+                tr
+                    th Icon
+                    th Name
+                    each header in headers
+                        th= header
+            tbody
+                each item in columnData
+                    tr
+                        td!= embedImg(item.type, item.name)
+                        td
+                            a(href=itemUrl(item.type, item.name))= (item.title || item.name)
+                        for j in Object.keys(headers)
+                            td= item[j]

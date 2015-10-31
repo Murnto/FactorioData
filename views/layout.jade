@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8", name='viewport', content='width=device-width, initial-scale=1.0')
+        title= title
+        link(rel="stylesheet", href="/css/bootstrap.min.css")
+        link(rel="stylesheet", href="/css/bootstrap-theme.css")
+        link(rel="stylesheet", href="/css/sortable-theme-bootstrap.css")
+        link(rel="stylesheet", href="/css/style.css")
+        script(src="/js/jquery.min.js")
+        script(src="/js/bootstrap.min.js")
+        script(src="/js/sortable.min.js")
+        script(src="/js/item_info.js")
+    body
+        nav.navbar.navbar-default.navbar-static-top(role="navigation")
+            .container-fluid
+                .navbar-header
+                    a.navbar-brand(href="/")
+                        span.glyphicon.glyphicon-leaf
+                        |  Factorio Data
+                ul.nav.navbar-nav
+                    li
+                        a(href="/pack/#{ modpack }") Home
+                    li
+                        a(href="/pack/#{ modpack }/tech") Technology
+                    li
+                        a(href="/pack/#{ modpack }/itemcats") Item Categories
+                ul.nav.navbar-nav.navbar-right
+                    if modpack_title
+                        li
+                            a(href="/pack/")
+                                | Config Pack: #{ modpack_title }
+        | !{ analytics }
+        script
+            | var modpack = "#{ modpack }";
+
+    block content
+
+    footer
+        p.text-center.text-muted WiP

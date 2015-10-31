@@ -1,0 +1,13 @@
+div
+    img.r-cat(src!=itemGroupImage(item.subgroup))
+    if recipe
+        div Time: #{ recipe.energy_required }
+        .ingredients
+            each ingd in recipe.ingredients
+                div
+                    if ingd.type
+                        != embedImg(ingd.type, ingd.name)
+                        span.ingd-descr #{ ingd.amount }x #{ findTitle(ingd.name) }
+                    else
+                        != embedImg(findCraftableByName(ingd[1]).type, ingd[1])
+                        span.ingd-descr #{ ingd[2] }x #{ findTitle(ingd[1]) }

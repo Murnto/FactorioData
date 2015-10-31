@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    .container
+        h2 Iron Plate
+        h3 Recipes
+        table#table.table
+            thead
+                tr
+                    th Icon
+                    th Category
+                    th Name
+                    th Ingredients
+                    th Result
+                    th Unlocked By
+            tbody
+                each r in recipes
+                    include partials/recipe
+        h3 Used in
+        table#table.table
+            thead
+                tr
+                    th Icon
+                    th Category
+                    th Name
+                    th Ingredients
+                    th Result
+                    th Unlocked By
+            tbody
+                each r in uses
+                    include partials/recipe

@@ -1,0 +1,40 @@
+tr
+    td
+        if r.icon != embedImg(r.type, r.name)
+    td
+        if r.assemblerMap
+            a(href=recipeCategoryUrl(r.category))
+                != embedImg('item', r.assemblerMap[0].name)
+        else
+            = r.category
+    td= r.title || r.name
+    td
+        each ingd in r.ingredients
+            if ingd.type
+                |  #{ ingd.amount }x !{ embedItemPopover(ingd.name) }
+            else
+                |  #{ ingd[2] }x !{ embedItemPopover(ingd[1]) }
+    td
+        - var keys = Object.keys(r.results)
+        each key in keys
+            - var rslt = r.results[key]
+
+            if rslt.probability && rslt.probability != 1
+                |  #{ Math.round(rslt.probability * 100) }%
+
+            if rslt.amount
+                |  #{ rslt.amount }x
+            else if rslt.amount_min
+                |  #{ rslt.amount_min }-#{ rslt.amount_max }x
+            else
+                |  1x
+            = ' '
+            != embedItemPopover(rslt.name)
+
+            if key != keys[keys.length - 1]
+                br
+
+    td
+        each unlock in r.unlock_by
+            a(href="/pack/#{ modpack }/tech/#{ unlock }")
+                | !{ embedImg('technology', unlock, 'tech-img') } #{ findTitle(unlock) }
