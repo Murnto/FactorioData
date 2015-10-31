@@ -16,16 +16,18 @@ block content
             tbody
                 each r in recipes
                     include partials/recipe
-        h3 Used in
-        table#table.table
-            thead
-                tr
-                    th Icon
-                    th Category
-                    th Name
-                    th Ingredients
-                    th Result
-                    th Unlocked By
-            tbody
-                each r in uses
-                    include partials/recipe
+
+        if uses && uses.length
+            h3 Used in
+            table#table.table
+                thead
+                    tr
+                        th Icon
+                        th Category
+                        th Name
+                        th Ingredients
+                        th Result
+                        th Unlocked By
+                tbody
+                    each r in uses
+                        include partials/recipe
