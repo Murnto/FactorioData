@@ -7,7 +7,7 @@ div
                 div
                     if ingd.type
                         != embedImg(ingd.type, ingd.name)
-                        span.ingd-descr #{ ingd.amount }x #{ findTitle(ingd.name) }
+                        span.ingd-descr  #{ ingd.amount }x #{ findTitle(ingd.name) }
                     else
                         != embedImg(findCraftableByName(ingd[1]).type, ingd[1])
-                        span.ingd-descr #{ ingd[2] }x #{ findTitle(ingd[1]) }
+                        span.ingd-descr  #{ ingd[2] }x #{ findTitle(ingd[1]) }
