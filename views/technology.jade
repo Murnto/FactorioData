@@ -11,13 +11,14 @@ block content
                     | #{ ingd[2] }x !{ embedItemPopover(ingd[1]) }
                     = ' '
             |  x #{ tech.unit.count }
-        h3 Requires
-        each prereq in Object.keys(tech.prerequisites)
-            - var prereqName = tech.prerequisites[prereq]
-            div
-                a(href="./#{ prereqName }")
-                    != embedImg('technology', prereqName, 'tech-img')
-                    |  #{ prereqTitles[prereq] }
+        if tech.prerequisites && tech.prerequisites.length
+            h3 Requires
+            each prereq in Object.keys(tech.prerequisites)
+                - var prereqName = tech.prerequisites[prereq]
+                div
+                    a(href="./#{ prereqName }")
+                        != embedImg('technology', prereqName, 'tech-img')
+                        |  #{ prereqTitles[prereq] }
         br
         if tech.allows.length
             h3 Allows
