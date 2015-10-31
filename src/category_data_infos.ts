@@ -420,7 +420,7 @@ function getCategories() {
             "info": {}
         },
         "solar-panel": {
-            "name": "solar-panel",
+            "name": "Solar Panels",
             "info": {
                 "energy_source": ENERGY_SOURCE,
                 "production": "Production"
