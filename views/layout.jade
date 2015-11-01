@@ -11,6 +11,8 @@ html(lang="en")
         script(src="/js/bootstrap.min.js")
         script(src="/js/sortable.min.js")
         script(src="/js/item_info.js")
+
+        block head
     body
         nav.navbar.navbar-default.navbar-static-top(role="navigation")
             .container-fluid
@@ -25,6 +27,8 @@ html(lang="en")
                         a(href="/pack/#{ modpack }/tech") Technology
                     li
                         a(href="/pack/#{ modpack }/itemcats") Item Categories
+                    li
+                        a(href="/pack/#{ modpack }/factoratio/") Factoratio
                 ul.nav.navbar-nav.navbar-right
                     if modpack_title
                         li

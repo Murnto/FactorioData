@@ -1,4 +1,5 @@
 /// <reference path="helpers.ts" />
+/// <reference path="routes/factoratio.ts" />
 /// <reference path="routes/api.ts" />
 /// <reference path="routes/index.ts" />
 /// <reference path="routes/itemcats.ts" />

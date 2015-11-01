@@ -8,6 +8,7 @@ var gitLocals = require('./src/git_locals');
 var routes = require('./routes/index');
 var itemCats = require('./routes/itemcats');
 var api = require('./routes/api').router;
+var factoratio = require('./routes/factoratio');
 
 var app = express();
 app.use(require('./helpers'));
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/api', api);
 app.use('/itemcats', itemCats);
+app.use('/factoratio', factoratio);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
