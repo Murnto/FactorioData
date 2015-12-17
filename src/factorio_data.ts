@@ -17,7 +17,14 @@ module FactorioData {
                 var pack = loadPack(dir, dir);
 
                 packInfos.push(pack.info);
-            } else if (stats.isFile() && dir.indexOf('.') === -1) { // perform linking of packs (eg. default)
+            }
+        }
+
+        for (var i in dirs) {
+            var dir = dirs[i];
+            var stats = fs.lstatSync(PACK_DIR + '/' + dir);
+
+            if (stats.isFile() && dir.indexOf('.') === -1) { // perform linking of packs (eg. default)
                 var content = fs.readFileSync(PACK_DIR + '/' + dir, 'utf8').trim();
                 packs[dir] = packs[content];
 
