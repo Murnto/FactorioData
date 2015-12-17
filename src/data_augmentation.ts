@@ -1,4 +1,4 @@
-import ConfigData = require('config_data');
+import ConfigData = require('./config_data');
 
 export function augmentData(cfgd:ConfigData) {
     preProcessData(cfgd);
