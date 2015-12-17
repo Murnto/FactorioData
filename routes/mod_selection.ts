@@ -1,5 +1,6 @@
 /// <reference path="../typings/tsd.d.ts" />
 
+import ConfigData = require("../src/config_data");
 var express = require('express');
 export var router = express.Router();
 import FData = require('../src/factorio_data');
@@ -26,9 +27,11 @@ router.get('/:pack', function (req, res, next) {
 
 export function modSelection(req, res, next) {
     var spl = req.url.split('/');
-    var chosenPack;
+    var chosenPack:ConfigData;
+    var typedPackId;
 
     if (spl.length > 1 && spl[1] == 'pack') {
+        typedPackId = spl[2];
         chosenPack = FData.getPack(spl[2]);
         if (!chosenPack) {
             next({
@@ -44,10 +47,13 @@ export function modSelection(req, res, next) {
             }
         }
     } else {
+        typedPackId = 'default';
         chosenPack = FData.getPack('default');
+    }
 
+    if (typedPackId != chosenPack.info.name) {
         if (spl[1] == 'icon') {
-            req.url = '/pack/' + chosenPack.packid + req.url;
+            req.url = '/pack/' + chosenPack.packid + spl.join('/');
         }
     }
 
