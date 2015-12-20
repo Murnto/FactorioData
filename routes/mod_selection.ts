@@ -9,9 +9,6 @@ router.get('/', function (req, res, next) {
     var defaultPack = FData.getPack('default');
     res.render('pack_list', {
         title: 'Configurations',
-        modpack: defaultPack.packid,
-        modpack_title: undefined,
-        //modpack_title: defaultPack.info.title,
         packInfos: FData.packInfos
     });
 });
