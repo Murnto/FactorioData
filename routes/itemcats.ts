@@ -1,36 +1,37 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-var express = require('express');
-var router = express.Router();
-import FData = require('../src/factorio_data');
+import * as express from "express";
+import * as FData from "../src/factorio_data";
 
-router.get('/:cat', function (req, res, next) {
-    var catdata = FData.getPack(res.locals.modpack).catdata;
-    var cat = req.params.cat;
+let router:express.Router = express.Router();
+
+router.get("/:cat", function (req:express.Request, res:express.Response, next:Function):void {
+    let cat:string = req.params.cat;
+    let catdata:any = FData.getPack(res.locals.modpack).catdata;
 
     if (!catdata.CATEGORIES[cat]) {
-        res.render('error', {
-            error: 'No such category'
+        res.render("error", {
+            error: "No such category"
         });
         return;
     }
 
-    var info = catdata.CATEGORIES[cat];
+    let info:any = catdata.CATEGORIES[cat];
 
-    res.render('itemcat/list', {
-        title: info.name,
+    res.render("itemcat/list", {
         cat: cat,
+        columnData: info.data,
         headers: info.headers,
-        columnData: info.data
+        title: info.name,
     });
 });
 
-router.get('/', function (req, res, next) {
-    var catdata = FData.getPack(res.locals.modpack).catdata;
-    res.render('itemcat/index', {
-        title: 'Item Categories',
-        itemcats: catdata.actual_categories
+router.get("/", function (req:express.Request, res:express.Response, next:Function):void {
+    let catdata:any = FData.getPack(res.locals.modpack).catdata;
+    res.render("itemcat/index", {
+        itemcats: catdata.actualCategories,
+        title: "Item Categories",
     });
 });
 
-module.exports = router;
+export = router;

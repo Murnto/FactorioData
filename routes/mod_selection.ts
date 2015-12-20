@@ -1,56 +1,59 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-import ConfigData = require("../src/config_data");
-var express = require('express');
-export var router = express.Router();
-import FData = require('../src/factorio_data');
+import * as express from "express";
+import * as FData from "../src/factorio_data";
+import {ConfigData} from "../src/config_data";
 
-router.get('/', function (req, res, next) {
-    var defaultPack = FData.getPack('default');
-    res.render('pack_list', {
-        title: 'Configurations',
-        packInfos: FData.packInfos
+export let router:express.Router = express.Router();
+
+router.get("/", function (req:express.Request, res:express.Response, next:Function):void {
+    res.render("pack_list", {
+        packInfos: FData.packInfos,
+        title: "Configurations",
     });
 });
 
-router.get('/:pack', function (req, res, next) {
-    var pack = req.params.pack;
-    if (req.url.substr(-1) != '/') {
-        res.redirect(301, '/pack/' + pack + '/')
+router.get("/:pack", function (req:express.Request, res:express.Response, next:Function):void {
+    let pack:string = req.params.pack;
+
+    if (req.url.substr(-1) !== "/") {
+        res.redirect(301, "/pack/" + pack + "/");
     } else {
         next();
     }
 });
 
-export function modSelection(req, res, next) {
-    var spl = req.url.split('/');
-    var chosenPack:ConfigData;
-    var typedPackId;
+export function modSelection(req:express.Request, res:express.Response, next:Function):void {
+    "use strict";
 
-    if (spl.length > 1 && spl[1] == 'pack') {
+    let spl:string[] = req.url.split("/");
+    let chosenPack:ConfigData;
+    let typedPackId:string;
+
+    if (spl.length > 1 && spl[1] === "pack") {
         typedPackId = spl[2];
         chosenPack = FData.getPack(spl[2]);
         if (!chosenPack) {
             next({
+                extended_message: "Could not find pack \"" + spl[2] + "\"",
+                message: "No such pack",
                 status: 404,
-                extended_message: 'Could not find pack "' + spl[2] + '"',
-                message: 'No such pack'
             });
             return;
         } else {
             spl.splice(1, 2);
-            if (spl[1] !== 'icon') {
-                req.url = spl.join('/');
+            if (spl[1] !== "icon") {
+                req.url = spl.join("/");
             }
         }
     } else {
-        typedPackId = 'default';
-        chosenPack = FData.getPack('default');
+        typedPackId = "default";
+        chosenPack = FData.getPack("default");
     }
 
-    if (typedPackId != chosenPack.info.name) {
-        if (spl[1] == 'icon') {
-            req.url = '/pack/' + chosenPack.packid + spl.join('/');
+    if (typedPackId !== chosenPack.info.name) {
+        if (spl[1] === "icon") {
+            req.url = "/pack/" + chosenPack.packid + spl.join("/");
         }
     }
 

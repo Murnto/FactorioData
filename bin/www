@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../built/app');
 var debug = require('debug')('factwebint:server');
 var http = require('http');
 

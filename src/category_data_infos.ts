@@ -1,31 +1,37 @@
-function yesNo(e) {
-    return e ? 'Yes' : 'No';
+function yesNo(e:boolean):string {
+    "use strict";
+
+    return e ? "Yes" : "No";
 }
 
-function listEntries(e) {
-    var result;
-    for (var i = 0; i < e.length; i++) {
-        if (i == 0) {
+function listEntries(e:any[]):string {
+    "use strict";
+
+    let result:string;
+    for (let i:number = 0; i < e.length; i++) {
+        if (i === 0) {
             result = e[i];
         } else {
-            result += ', ' + e[i];
+            result += ", " + e[i];
         }
     }
     return result;
 }
 
-var ENERGY_SOURCE_W_EMISSIONS = {
+let ENERGY_SOURCE_W_EMISSIONS:any = {
     "emissions": "Emissions",
     "type": "Energy type",
-    "usage_priority": "Energy priority"
+    "usage_priority": "Energy priority",
 };
 
-var ENERGY_SOURCE = {
+let ENERGY_SOURCE:any = {
     "type": "Energy type",
-    "usage_priority": "Energy priority"
+    "usage_priority": "Energy priority",
 };
 
-function getCategories() {
+export function getCategories():any {
+    "use strict";
+
     return {
         "accumulator": {
             "name": "Accumulators",
@@ -37,33 +43,33 @@ function getCategories() {
                     "type": "Type",
                     "buffer_capacity": "Capacity",
                     "usage_priority": "Use priority",
-                    "output_flow_limit": "Output limit"
-                }
-            }
+                    "output_flow_limit": "Output limit",
+                },
+            },
         },
         "active-defense-equipment": {
             "name": "active-defense-equipment",
-            "info": {}
+            "info": {},
         },
         "ammo": {
             "name": "ammo",
-            "info": {}
+            "info": {},
         },
         "ammo-category": {
             "name": "ammo-category",
-            "info": {}
+            "info": {},
         },
         "ammo-turret": {
             "name": "ammo-turret",
-            "info": {}
+            "info": {},
         },
         "armor": {
             "name": "armor",
-            "info": {}
+            "info": {},
         },
         "arrow": {
             "name": "arrow",
-            "info": {}
+            "info": {},
         },
         "assembling-machine": {
             "name": "Assembling Machines",
@@ -72,111 +78,111 @@ function getCategories() {
                 "crafting_speed": "Crafting Speed",
                 "energy_source": ENERGY_SOURCE_W_EMISSIONS,
                 "energy_usage": "Energy Usage",
-                "ingredient_count": "Ingredient Count"
-            }
+                "ingredient_count": "Ingredient Count",
+            },
         },
         "autoplace-control": {
             "name": "autoplace-control",
-            "info": {}
+            "info": {},
         },
         "battery-equipment": {
             "name": "battery-equipment",
-            "info": {}
+            "info": {},
         },
         "beacon": {
             "name": "beacon",
-            "info": {}
+            "info": {},
         },
         "blueprint": {
             "name": "blueprint",
-            "info": {}
+            "info": {},
         },
         "boiler": {
             "name": "Steam Boilers",
             "info": {
                 "burner": {
                     "effectivity": "Effectiveness",
-                    "emissions": "Emissions"
+                    "emissions": "Emissions",
                 },
                 "burning_cooldown": "Burning CD",
                 "energy_consumption": "Energy Consumption",
-            }
+            },
         },
         "capsule": {
             "name": "capsule",
-            "info": {}
+            "info": {},
         },
         "car": {
             "name": "car",
-            "info": {}
+            "info": {},
         },
         "cargo-wagon": {
             "name": "cargo-wagon",
-            "info": {}
+            "info": {},
         },
         "combat-robot": {
             "name": "combat-robot",
-            "info": {}
+            "info": {},
         },
         "construction-robot": {
             "name": "construction-robot",
-            "info": {}
+            "info": {},
         },
         "container": {
             "name": "container",
-            "info": {}
+            "info": {},
         },
         "corpse": {
             "name": "corpse",
-            "info": {}
+            "info": {},
         },
         "damage-type": {
             "name": "damage-type",
-            "info": {}
+            "info": {},
         },
         "deconstruction-item": {
             "name": "deconstruction-item",
-            "info": {}
+            "info": {},
         },
         "decorative": {
             "name": "decorative",
-            "info": {}
+            "info": {},
         },
         "electric-pole": {
             "name": "electric-pole",
-            "info": {}
+            "info": {},
         },
         "electric-turret": {
             "name": "electric-turret",
-            "info": {}
+            "info": {},
         },
         "energy-shield-equipment": {
             "name": "energy-shield-equipment",
-            "info": {}
+            "info": {},
         },
         "explosion": {
             "name": "explosion",
-            "info": {}
+            "info": {},
         },
         "fish": {
             "name": "fish",
-            "info": {}
+            "info": {},
         },
         "flame-thrower-explosion": {
             "name": "flame-thrower-explosion",
-            "info": {}
+            "info": {},
         },
         "fluid": {
             "name": "fluid",
-            "info": {}
+            "info": {},
         },
         "flying-text": {
             "name": "flying-text",
-            "info": {}
+            "info": {},
         },
         "font": {
             "name": "font",
-            "info": {}
+            "info": {},
         },
         "furnace": {
             "name": "Furnaces",
@@ -186,12 +192,12 @@ function getCategories() {
                 "energy_source": ENERGY_SOURCE,
                 "energy_usage": "Energy Usage",
                 "ingredient_count": "Ingredient Count",
-                "module_slots": "Module Slots"
-            }
+                "module_slots": "Module Slots",
+            },
         },
         "gate": {
             "name": "gate",
-            "info": {}
+            "info": {},
         },
         "generator": {
             "name": "Generators",
@@ -199,78 +205,78 @@ function getCategories() {
                 "effectivity": "Effectivity",
                 "energy_source": ENERGY_SOURCE,
                 "fluid_usage_per_tick": "Fluid Usage Per Tick",
-                "min_perceived_performance": "Min Perceived Performance"
-            }
+                "min_perceived_performance": "Min Perceived Performance",
+            },
         },
         "generator-equipment": {
             "name": "generator-equipment",
-            "info": {}
+            "info": {},
         },
-        //"ghost": {
+        // "ghost": {
         //    "name": "ghost",
         //    "info": {
         //
         //    }
-        //},
+        // },
         "gui-style": {
             "name": "gui-style",
-            "info": {}
+            "info": {},
         },
         "gun": {
             "name": "gun",
-            "info": {}
+            "info": {},
         },
         "inserter": {
             "name": "inserter",
-            "info": {}
+            "info": {},
         },
         "item": {
             "name": "item",
-            "info": {}
+            "info": {},
         },
         "item-entity": {
             "name": "item-entity",
-            "info": {}
+            "info": {},
         },
         "item-group": {
             "name": "item-group",
-            "info": {}
+            "info": {},
         },
         "item-subgroup": {
             "name": "item-subgroup",
-            "info": {}
+            "info": {},
         },
         "lab": {
             "name": "lab",
-            "info": {}
+            "info": {},
         },
         "lamp": {
             "name": "lamp",
-            "info": {}
+            "info": {},
         },
         "land-mine": {
             "name": "land-mine",
-            "info": {}
+            "info": {},
         },
         "locomotive": {
             "name": "locomotive",
-            "info": {}
+            "info": {},
         },
         "logistic-container": {
             "name": "logistic-container",
-            "info": {}
+            "info": {},
         },
         "logistic-robot": {
             "name": "logistic-robot",
-            "info": {}
+            "info": {},
         },
         "map-settings": {
             "name": "map-settings",
-            "info": {}
+            "info": {},
         },
         "market": {
             "name": "market",
-            "info": {}
+            "info": {},
         },
         "mining-drill": {
             "name": "Mining Drills",
@@ -278,211 +284,212 @@ function getCategories() {
                 "energy_source": {
                     "emissions": "Emissions",
                     "type": "Energy type",
-                    "usage_priority": "Energy priority"
+                    "usage_priority": "Energy priority",
                 },
                 "energy_usage": "Energy usage",
                 "mining_power": "Mining power",
                 "mining_speed": "Mining speed",
                 "module_slots": "Module slots",
                 "resource_categories": ["Resource Categories", listEntries],
-                "resource_searching_radius": "Radius"
-            }
+                "resource_searching_radius": "Radius",
+            },
         },
         "mining-tool": {
             "name": "mining-tool",
-            "info": {}
+            "info": {},
         },
         "module": {
             "name": "module",
-            "info": {}
+            "info": {},
         },
         "movement-bonus-equipment": {
             "name": "movement-bonus-equipment",
-            "info": {}
+            "info": {},
         },
         "night-vision-equipment": {
             "name": "night-vision-equipment",
-            "info": {}
+            "info": {},
         },
         "noise-layer": {
             "name": "noise-layer",
-            "info": {}
+            "info": {},
         },
         "offshore-pump": {
             "name": "offshore-pump",
-            "info": {}
+            "info": {},
         },
         "particle": {
             "name": "particle",
-            "info": {}
+            "info": {},
         },
         "particle-source": {
             "name": "particle-source",
-            "info": {}
+            "info": {},
         },
         "pipe": {
             "name": "pipe",
-            "info": {}
+            "info": {},
         },
         "pipe-to-ground": {
             "name": "pipe-to-ground",
-            "info": {}
+            "info": {},
         },
         "player": {
             "name": "player",
-            "info": {}
+            "info": {},
         },
         "player-port": {
             "name": "player-port",
-            "info": {}
+            "info": {},
         },
         "projectile": {
             "name": "projectile",
-            "info": {}
+            "info": {},
         },
         "pump": {
             "name": "pump",
-            "info": {}
+            "info": {},
         },
         "radar": {
             "name": "radar",
-            "info": {}
+            "info": {},
         },
-        //"rail": {
+        // "rail": {
         //    "name": "rail",
         //    "info": {
         //
         //    }
-        //},
+        // },
         "rail-category": {
             "name": "rail-category",
-            "info": {}
+            "info": {},
         },
         "rail-remnants": {
             "name": "rail-remnants",
-            "info": {}
+            "info": {},
         },
         "rail-signal": {
             "name": "rail-signal",
-            "info": {}
+            "info": {},
         },
         "recipe": {
             "name": "recipe",
-            "info": {}
+            "info": {},
         },
         "recipe-category": {
             "name": "recipe-category",
-            "info": {}
+            "info": {},
         },
         "repair-tool": {
             "name": "repair-tool",
-            "info": {}
+            "info": {},
         },
         "resource": {
             "name": "Resources",
             "info": {
-                'category': 'Category',
-                'infinite': ['Infinite', yesNo],
-                'minable': {
-                    'hardness': 'Hardness',
-                    'mining_time': 'Mining time'
+                "category": "Category",
+                "infinite": ["Infinite", yesNo],
+                "minable": {
+                    "hardness": "Hardness",
+                    "mining_time": "Mining time",
                 },
-                'minimum': 'Minimum',
-                'normal': 'Normal',
-                'map_color': ['Map color', function (e) {
-                    //return Number(0x1000000 + Math.round(e.r * 255)*0x10000 + Math.round(e.g * 255)*0x100 + Math.round(e.b * 255)).toString(16).substring(1);
-                    return Number(0x1000000 + Math.round(e.r * 255) * 0x10000 + Math.round(e.g * 255) * 0x100 + Math.round(e.b * 255)).toString(16).substring(1).toUpperCase();
-                }]
-            }
+                "minimum": "Minimum",
+                "normal": "Normal",
+                "map_color": [
+                    "Map color",
+                    function (e:{r:number, g:number, b:number}):string {
+                        // return Number(0x1000000 + Math.round(e.r * 255)*0x10000 + Math.round(e.g * 255)*0x100 + Math.round(e.b * 255)).toString(16).substring(1);
+                        return Number(0x1000000 + Math.round(e.r * 255) * 0x10000 + Math.round(e.g * 255) * 0x100 + Math.round(e.b * 255)).toString(16).substring(1).toUpperCase();
+                    },
+                ],
+            },
         },
         "resource-category": {
             "name": "resource-category",
-            "info": {}
+            "info": {},
         },
         "roboport": {
             "name": "roboport",
-            "info": {}
+            "info": {},
         },
         "rocket-defense": {
             "name": "rocket-defense",
-            "info": {}
+            "info": {},
         },
         "simple-entity": {
             "name": "simple-entity",
-            "info": {}
+            "info": {},
         },
         "smart-container": {
             "name": "smart-container",
-            "info": {}
+            "info": {},
         },
         "smoke": {
             "name": "smoke",
-            "info": {}
+            "info": {},
         },
         "solar-panel": {
             "name": "Solar Panels",
             "info": {
                 "energy_source": ENERGY_SOURCE,
-                "production": "Production"
-            }
+                "production": "Production",
+            },
         },
         "solar-panel-equipment": {
             "name": "solar-panel-equipment",
-            "info": {}
+            "info": {},
         },
         "splitter": {
             "name": "splitter",
-            "info": {}
+            "info": {},
         },
         "sticker": {
             "name": "sticker",
-            "info": {}
+            "info": {},
         },
         "storage-tank": {
             "name": "storage-tank",
-            "info": {}
+            "info": {},
         },
         "technology": {
             "name": "technology",
-            "info": {}
+            "info": {},
         },
         "tile": {
             "name": "tile",
-            "info": {}
+            "info": {},
         },
         "train-stop": {
             "name": "train-stop",
-            "info": {}
+            "info": {},
         },
         "transport-belt": {
             "name": "transport-belt",
-            "info": {}
+            "info": {},
         },
         "transport-belt-to-ground": {
             "name": "transport-belt-to-ground",
-            "info": {}
+            "info": {},
         },
         "tree": {
             "name": "tree",
-            "info": {}
+            "info": {},
         },
         "turret": {
             "name": "turret",
-            "info": {}
+            "info": {},
         },
         "unit": {
             "name": "unit",
-            "info": {}
+            "info": {},
         },
         "unit-spawner": {
             "name": "unit-spawner",
-            "info": {}
+            "info": {},
         },
         "wall": {
             "name": "wall",
-            "info": {}
-        }
-    }
+            "info": {},
+        },
+    };
 }
-
-export = getCategories;

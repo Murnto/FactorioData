@@ -2,9 +2,6 @@
 bower_components
 node_modules
 public/**/*.js
-src/**/*.js
-routes/**/*.js
-helpers.js
-build.js
 public/pack
 public/css/style.css
+built/

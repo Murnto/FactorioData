@@ -1,88 +1,123 @@
 /// <reference path="./typings/tsd.d.ts" />
 
-import FactorioData = require('./src/factorio_data');
+import * as express from "express";
+import * as FactorioData from "./src/factorio_data";
 
-function packUrl(_pack_name_) {
-    return '/pack/' + _pack_name_;
+function packUrl(_packName:string):string {
+    "use strict";
+
+    return "/pack/" + _packName;
 }
 
-function findTitle(_pack_name_, name) {
-    return FactorioData.getPack(_pack_name_).findTitle(name);
+function findTitle(_packName:string, name:string):string {
+    "use strict";
+
+    return FactorioData.getPack(_packName).findTitle(name);
 }
-function findCraftableByName(_pack_name_, name) {
-    return FactorioData.getPack(_pack_name_).findCraftableByName(name);
+
+function findCraftableByName(_packName:string, name:string):any {
+    "use strict";
+
+    return FactorioData.getPack(_packName).findCraftableByName(name);
 }
-function getImgUrl(_pack_name_, type, name) {
-    return packUrl(_pack_name_) + "/icon/" + type + "/" + name + ".png";
+
+function getImgUrl(_packName:string, type:string, name:string):string {
+    "use strict";
+
+    return packUrl(_packName) + "/icon/" + type + "/" + name + ".png";
 }
-function embedImg(_pack_name_, type, name, clazz?) {
+
+function embedImg(_packName:string, type:string, name:string, clazz?:string):string {
+    "use strict";
+
     if (clazz) {
-        return "<img class=\"" + clazz + "\" src=\"" + getImgUrl(_pack_name_, type, name) + "\"/>";
+        return "<img class=\"" + clazz + "\" src=\"" + getImgUrl(_packName, type, name) + "\"/>";
     } else {
-        return "<img src=\"" + getImgUrl(_pack_name_, type, name) + "\"/>";
+        return "<img src=\"" + getImgUrl(_packName, type, name) + "\"/>";
     }
-}
-function recipeCategoryUrl(_pack_name_, cat) {
-    return packUrl(_pack_name_) + "/recipecat/" + cat;
-}
-function itemCount(_pack_name_, count, type, name) {
-    return "<div class=\"item-count\">" + count + "x " + embedImg(_pack_name_, type, name) + "</div>";
-    //return "<div class=\"item-count\">" + app.locals.embedImg(type, name) + "<div>" + count + "</div></div>";
-}
-function itemGroupImage(_pack_name_, group) {
-    if (FactorioData.getPack(_pack_name_).data['item-subgroup'][group]) {
-        return packUrl(_pack_name_) + '/icon/item-group/' + FactorioData.getPack(_pack_name_).data['item-subgroup'][group].group + ".png";
-    }
-}
-function recipeByName(_pack_name_, name) {
-    return FactorioData.getPack(_pack_name_).data.recipe[name];
-}
-function popoverAnchorStart(_pack_name_, name, type?) {
-    var craftable = FactorioData.getPack(_pack_name_).findCraftableByName(name);
-    type = type || craftable.type;
-    return '<a href="' + packUrl(_pack_name_) + '/i/' + type + '/' + craftable.name + '" title="' + craftable.title + '" data-trigger="hover" data-item-type="' + type + '" data-item-name="' + name + '">';
-}
-function embedItemPopover(_pack_name_, name, type?) {
-    var craftable = FactorioData.getPack(_pack_name_).findCraftableByName(name);
-    type = type || craftable.type;
-    return popoverAnchorStart(_pack_name_, name, type) + embedImg(_pack_name_, type, name) + '</a>';
-}
-function itemUrl(_pack_name_, type, name) {
-    return packUrl(_pack_name_) + '/i/' + type + '/' + name;
 }
 
-module.exports = function(req, res, next){
-    res.locals.findTitle = function (name) {
+function recipeCategoryUrl(_packName:string, cat:string):string {
+    "use strict";
+
+    return packUrl(_packName) + "/recipecat/" + cat;
+}
+
+function itemCount(_packName:string, count:string|number, type:string, name:string):string {
+    "use strict";
+
+    return "<div class=\"item-count\">" + count + "x " + embedImg(_packName, type, name) + "</div>";
+    // return "<div class=\"item-count\">" + app.locals.embedImg(type, name) + "<div>" + count + "</div></div>";
+}
+
+function itemGroupImage(_packName:string, group:string):string {
+    "use strict";
+
+    if (FactorioData.getPack(_packName).data["item-subgroup"][group]) {
+        return packUrl(_packName) + "/icon/item-group/" + FactorioData.getPack(_packName).data["item-subgroup"][group].group + ".png";
+    }
+}
+
+function recipeByName(_packName:string, name:string):any {
+    "use strict";
+
+    return FactorioData.getPack(_packName).data.recipe[name];
+}
+
+function popoverAnchorStart(_packName:string, name:string, type?:string):string {
+    "use strict";
+
+    let craftable:any = FactorioData.getPack(_packName).findCraftableByName(name);
+    type = type || craftable.type;
+    return "<a href=\"" + packUrl(_packName) + "/i/" + type + "/" + craftable.name + "\" title=\"" + craftable.title + "\" data-trigger=\"hover\" data-item-type=\"" + type + "\" data-item-name=\"" + name + "\">";
+}
+
+function embedItemPopover(_packName:string, name:string, type?:string):string {
+    "use strict";
+
+    let craftable:any = FactorioData.getPack(_packName).findCraftableByName(name);
+    type = type || craftable.type;
+    return popoverAnchorStart(_packName, name, type) + embedImg(_packName, type, name) + "</a>";
+}
+
+function itemUrl(_packName:string, type:string, name:string):string {
+    "use strict";
+
+    return packUrl(_packName) + "/i/" + type + "/" + name;
+}
+
+module.exports = function (req:express.Request, res:express.Response, next:Function):void {
+    res.locals.findTitle = function (name:string):string {
         return findTitle(res.locals.modpack, name);
     };
-    res.locals.findCraftableByName = function (name) {
+    res.locals.findCraftableByName = function (name:string):any {
         return findCraftableByName(res.locals.modpack, name);
     };
-    res.locals.getImgUrl = function (type, name) {
+    res.locals.getImgUrl = function (type:string, name:string):string {
         return getImgUrl(res.locals.modpack, type, name);
     };
-    res.locals.embedImg = function (type, name, clazz?) {
+    res.locals.embedImg = function (type:string, name:string, clazz?:string):string {
         return embedImg(res.locals.modpack, type, name, clazz);
     };
-    res.locals.recipeCategoryUrl = function (cat) {
+    res.locals.recipeCategoryUrl = function (cat:string):string {
         return recipeCategoryUrl(res.locals.modpack, cat);
     };
-    res.locals.itemCount = function (count, type, name) {
+    res.locals.itemCount = function (count:string, type:string, name:string):string {
         return itemCount(res.locals.modpack, count, type, name);
     };
-    res.locals.itemGroupImage = function (group) {
+    res.locals.itemGroupImage = function (group:string):string {
         return itemGroupImage(res.locals.modpack, group);
     };
-    res.locals.recipeByName = function (name) {
+    res.locals.recipeByName = function (name:string):any {
         return recipeByName(res.locals.modpack, name);
     };
-    res.locals.popoverAnchorStart = function (name, type?) {
+    res.locals.popoverAnchorStart = function (name:string, type?:string):string {
         return popoverAnchorStart(res.locals.modpack, name, type);
     };
-    res.locals.embedItemPopover = function (name, type?) {
+    res.locals.embedItemPopover = function (name:string, type?:string):string {
         return embedItemPopover(res.locals.modpack, name, type);
     };
-    res.locals.itemUrl = function (type, name) {
+    res.locals.itemUrl = function (type:string, name:string):string {
         return itemUrl(res.locals.modpack, type, name);
     };
 

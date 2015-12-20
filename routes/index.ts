@@ -1,69 +1,78 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-var express = require('express');
-var router = express.Router();
-import FData = require('../src/factorio_data');
+import * as express from "express";
+import * as FData from "../src/factorio_data";
 
-router.get('/i/:type/:name', function (req, res, next) {
-    var name = req.params.name;
-    var type = req.params.type;
+let router:express.Router = express.Router();
 
-    res.render('item', {
+router.get("/i/:type/:name", function (req:express.Request, res:express.Response, next:Function):void {
+    let name:string = req.params.name;
+    let type:string = req.params.type;
+
+    res.render("item", {
         name: name,
-        type: type,
-        title: FData.getPack(res.locals.modpack).findTitle(name),
         recipes: FData.getPack(res.locals.modpack).recipesWithResult(name),
-        uses: FData.getPack(res.locals.modpack).recipesWithIngredient(name)
+        title: FData.getPack(res.locals.modpack).findTitle(name),
+        type: type,
+        uses: FData.getPack(res.locals.modpack).recipesWithIngredient(name),
     });
 });
 
-router.get('/recipecat/:name', function (req, res, next) {
-    var name = req.params.name;
+router.get("/recipecat/:name", function (req:express.Request, res:express.Response, next:Function):void {
+    let name:string = req.params.name;
 
-    res.render('assem_map', {
+    res.render("assem_map", {
+        assemMap: FData.getPack(res.locals.modpack).craftCatMap[name],
         name: name,
         title: name,
-        assemMap: FData.getPack(res.locals.modpack).craftCatMap[name]
     });
 });
 
-router.get('/tech', function (req, res, next) {
+router.get("/tech", function (req:express.Request, res:express.Response, next:Function):void {
 
-    res.render('tech_list', {
-        title: 'Technologies',
-        technology: FData.getPack(res.locals.modpack).data.technology
+    res.render("tech_list", {
+        technology: FData.getPack(res.locals.modpack).data.technology,
+        title: "Technologies",
     });
 });
 
-router.get('/tech/:name', function (req, res, next) {
-    var name = req.params.name;
+router.get("/tech/:name", function (req:express.Request, res:express.Response, next:Function):void {
+    let name:string = req.params.name;
 
-    var tech = FData.getPack(res.locals.modpack).data.technology[name];
-    var prereqTitles = [];
-    var allowsTitles = [];
+    let tech:any = FData.getPack(res.locals.modpack).data.technology[name];
+    let prereqTitles:any[] = [];
+    let allowsTitles:any[] = [];
 
-    for (var prereq in tech.prerequisites) {
+    for (let prereq in tech.prerequisites) {
+        if (!tech.prerequisites.hasOwnProperty(prereq)) {
+            continue;
+        }
+
         prereq = tech.prerequisites[prereq];
-        prereqTitles.push(FData.getPack(res.locals.modpack).data.technology[prereq].title || prereq)
+        prereqTitles.push(FData.getPack(res.locals.modpack).data.technology[prereq].title || prereq);
     }
 
-    for (var allow in tech.allows) {
+    for (let allow in tech.allows) {
+        if (!tech.allows.hasOwnProperty(allow)) {
+            continue;
+        }
+
         allow = tech.allows[allow];
-        allowsTitles.push(FData.getPack(res.locals.modpack).data.technology[allow].title || allow)
+        allowsTitles.push(FData.getPack(res.locals.modpack).data.technology[allow].title || allow);
     }
 
-    res.render('technology', {
-        name: name,
-        title: tech.title || name,
-        prereqTitles: prereqTitles,
+    res.render("technology", {
         allowsTitles: allowsTitles,
-        tech: tech
+        name: name,
+        prereqTitles: prereqTitles,
+        tech: tech,
+        title: tech.title || name,
     });
 });
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Factorio Data'});
+router.get("/", function (req:express.Request, res:express.Response, next:Function):void {
+    res.render("index", {title: "Factorio Data"});
 });
 
-module.exports = router;
+export = router;

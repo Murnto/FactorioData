@@ -1,29 +1,29 @@
 /// <reference path="./category_data_infos.ts" />
 
-var getCategories = require('./category_data_infos');
+import {getCategories} from "./category_data_infos";
 
 export class CategoryData {
-    actual_categories:any = [];
-    CATEGORIES:any = getCategories();
+    public CATEGORIES:any = getCategories();
+    private actualCategories:any = [];
 
-    constructor(raw_data:any) {
-        var keys = Object.keys(this.CATEGORIES);
-        for (var i = 0; i < keys.length; i++) {
-            var v = this.CATEGORIES[keys[i]];
+    constructor(rawData:any) {
+        let keys:string[] = Object.keys(this.CATEGORIES);
+        for (let i:number = 0; i < keys.length; i++) {
+            let v:any = this.CATEGORIES[keys[i]];
             extractHeaders(v.info, v.headers = []);
 
             v.data = [];
 
-            var data = raw_data[keys[i]];
-            var dkeys = Object.keys(data);
-            for (var j = 0; j < dkeys.length; j++) {
-                var d = data[dkeys[j]];
+            let data:any = rawData[keys[i]];
+            let dkeys:string[] = Object.keys(data);
+            for (let j:number = 0; j < dkeys.length; j++) {
+                let d:any = data[dkeys[j]];
 
-                if (d.icon && d.icon.indexOf('__Cursed-Exp__') === 0) {
+                if (d.icon && d.icon.indexOf("__Cursed-Exp__") === 0) {
                     continue;
                 }
 
-                var entry:any = [];
+                let entry:any = [];
                 v.data.push(entry);
                 entry.name = d.name;
                 entry.title = d.title;
@@ -32,28 +32,29 @@ export class CategoryData {
             }
 
             if (v.headers.length > 0) {
-                this.actual_categories.push({
-                    'name': keys[i],
-                    'title': v.name,
-                    'icon_type': v.data[0].type,
-                    'icon_name': v.data[0].name
-                })
+                this.actualCategories.push({
+                    "name": keys[i],
+                    "title": v.name,
+                    "icon_type": v.data[0].type,
+                    "icon_name": v.data[0].name,
+                });
             }
         }
     }
 }
 
-function extractHeaders(info, headers) {
-    //console.log('extract', info, headers);
-    var keys = Object.keys(info);
-    for (var i = 0; i < keys.length; i++) {
-        var k = keys[i];
-        var obj = info[k];
+function extractHeaders(info:any, headers:string[]):void {
+    "use strict";
+    // console.log("extract", info, headers);
+    let keys:string[] = Object.keys(info);
+    for (let i:number = 0; i < keys.length; i++) {
+        let k:string = keys[i];
+        let obj:any = info[k];
 
-        if (typeof obj === 'object' && !Array.isArray(obj)) {
+        if (typeof obj === "object" && !Array.isArray(obj)) {
             extractHeaders(obj, headers);
         } else {
-            var header;
+            let header:string;
             if (Array.isArray(obj)) {
                 header = obj[0];
             } else {
@@ -64,28 +65,31 @@ function extractHeaders(info, headers) {
     }
 }
 
-function round(value, decimals) {
-    return Number(Math.round(<any> (value + 'e' + decimals)) + 'e-' + decimals);
+function round(value:number, decimals:number):number {
+    "use strict";
+
+    return Number(Math.round(<any> (value + "e" + decimals)) + "e-" + decimals);
 }
 
-function extractData(data, info, colData) {
-    //console.log('extract', info, colData);
-    var keys = Object.keys(info);
-    for (var i = 0; i < keys.length; i++) {
-        var k = keys[i];
-        var obj = info[k];
+function extractData(data:any, info:any, colData:any):void {
+    "use strict";
+    // console.log("extract", info, colData);
+    let keys:string[] = Object.keys(info);
+    for (let i:number = 0; i < keys.length; i++) {
+        let k:string = keys[i];
+        let obj:any = info[k];
 
         if (data === undefined) {
-            colData.push('?');
-        } else if (typeof obj === 'object' && !Array.isArray(obj)) {
+            colData.push("?");
+        } else if (typeof obj === "object" && !Array.isArray(obj)) {
             extractData(data[k], obj, colData);
         } else {
-            var colEntry;
+            let colEntry:any;
             if (Array.isArray(obj)) {
                 colEntry = obj[1](data[k]);
             } else {
                 colEntry = data[k];
-                if (colEntry * 1 == colEntry) {
+                if (colEntry * 1 === colEntry) {
                     colEntry = round(colEntry * 1, 2);
                 }
             }

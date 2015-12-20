@@ -1,45 +1,55 @@
-import ConfigData = require('./config_data');
-import fs = require('fs');
+import {ConfigData, IConfigInfo} from "./config_data";
+import * as fs from "fs";
 
-var PACK_DIR = 'public/pack';
+let PACK_DIR:string = "public/pack";
 
 module FactorioData {
-    var packs = {};
-    export var packInfos = [];
+    "use strict";
+
+    let packs:{[index: string]: ConfigData} = {};
+    export let packInfos:IConfigInfo[] = [];
 
     function loadPacks():void {
-        var dirs = fs.readdirSync(PACK_DIR);
-        for (var i in dirs) {
-            var dir = dirs[i];
-            var stats = fs.lstatSync(PACK_DIR + '/' + dir);
+        let dirs:string[] = fs.readdirSync(PACK_DIR);
+        for (let i in dirs) {
+            if (!dirs.hasOwnProperty(i)) {
+                continue;
+            }
 
-            if (stats.isDirectory() && dir != '.git') {
-                var pack = loadPack(dir, dir);
+            let dir:string = dirs[i];
+            let stats:fs.Stats = fs.lstatSync(PACK_DIR + "/" + dir);
+
+            if (stats.isDirectory() && dir !== ".git") {
+                let pack:ConfigData = loadPack(dir, dir);
 
                 packInfos.push(pack.info);
             }
         }
 
-        for (var i in dirs) {
-            var dir = dirs[i];
-            var stats = fs.lstatSync(PACK_DIR + '/' + dir);
+        for (let i in dirs) {
+            if (!dirs.hasOwnProperty(i)) {
+                continue;
+            }
 
-            if (stats.isFile() && dir.indexOf('.') === -1) { // perform linking of packs (eg. default)
-                var content = fs.readFileSync(PACK_DIR + '/' + dir, 'utf8').trim();
+            let dir:string = dirs[i];
+            let stats:fs.Stats = fs.lstatSync(PACK_DIR + "/" + dir);
+
+            if (stats.isFile() && dir.indexOf(".") === -1) { // perform linking of packs (eg. default)
+                let content:string = fs.readFileSync(PACK_DIR + "/" + dir, "utf8").trim();
                 packs[dir] = packs[content];
 
-                console.log('Map', dir, 'to', content);
+                console.log("Map", dir, "to", content);
             }
         }
     }
 
-    function loadPack(packid, name):ConfigData {
-        var pack = new ConfigData(packid, name, PACK_DIR + '/' + packid);
+    function loadPack(packid:string, name:string):ConfigData {
+        let pack:ConfigData = new ConfigData(packid, name, PACK_DIR + "/" + packid);
         packs[packid] = pack;
         return pack;
     }
 
-    export function getPack(pack):ConfigData {
+    export function getPack(pack:string):ConfigData {
         return packs[pack];
     }
 

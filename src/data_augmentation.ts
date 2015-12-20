@@ -1,6 +1,8 @@
-import ConfigData = require('./config_data');
+import {ConfigData} from "./config_data";
 
-export function augmentData(cfgd:ConfigData) {
+export function augmentData(cfgd:ConfigData):void {
+    "use strict";
+
     preProcessData(cfgd);
     unifyRecipeResults(cfgd);
     unifyRecipeIngredients(cfgd);
@@ -10,28 +12,32 @@ export function augmentData(cfgd:ConfigData) {
     augmentTech(cfgd);
 }
 
-function preProcessData(cfgd) {
-    var data = cfgd.data;
+function preProcessData(cfgd:ConfigData):void {
+    "use strict";
 
-    _preProcessData(data.technology, 'prerequisites');
-    _preProcessData(data.technology, 'effects');
-    _preProcessData(data.technology, 'unit', 'ingredients');
-    _preProcessData(data.recipe, 'ingredients');
-    _preProcessData(data.recipe, 'results');
-    _preProcessData(data['mining-drill'], 'resource_categories');
-    _preProcessData(data['assembling-machine'], 'crafting_categories');
-    _preProcessData(data['furnace'], 'crafting_categories');
+    let data:any = cfgd.data;
+
+    _preProcessData(data.technology, "prerequisites");
+    _preProcessData(data.technology, "effects");
+    _preProcessData(data.technology, "unit", "ingredients");
+    _preProcessData(data.recipe, "ingredients");
+    _preProcessData(data.recipe, "results");
+    _preProcessData(data["mining-drill"], "resource_categories");
+    _preProcessData(data["assembling-machine"], "crafting_categories");
+    _preProcessData(data.furnace, "crafting_categories");
 }
 
-function _preProcessData(obj, ...keys) {
-    var objKeys = Object.keys(obj);
-    for (var i = 0; i < objKeys.length; i++) {
-        var item = obj[objKeys[i]];
-        for (var j = 0; j < keys.length - 1 && item; j++) {
+function _preProcessData(obj:any, ...keys:string[]):void {
+    "use strict";
+
+    let objKeys:string[] = Object.keys(obj);
+    for (let i:number = 0; i < objKeys.length; i++) {
+        let item:any = obj[objKeys[i]];
+        for (let j:number = 0; j < keys.length - 1 && item; j++) {
             item = item[keys[j]];
         }
         if (item[keys[keys.length - 1]]) {
-            if (typeof item[keys[keys.length - 1]] === 'string') {
+            if (typeof item[keys[keys.length - 1]] === "string") {
                 item[keys[keys.length - 1]] = [item[keys[keys.length - 1]]];
             } else {
                 item[keys[keys.length - 1]] = covertToList(item[keys[keys.length - 1]]);
@@ -40,36 +46,38 @@ function _preProcessData(obj, ...keys) {
     }
 }
 
-function unifyRecipeResults(cfgd) {
-    var data = cfgd.data;
-    var recipeKeys = Object.keys(data.recipe);
-    for (var i = 0; i < recipeKeys.length; i++) {
-        var r = data.recipe[recipeKeys[i]];
+function unifyRecipeResults(cfgd:ConfigData):void {
+    "use strict";
+
+    let data:any = cfgd.data;
+    let recipeKeys:string[] = Object.keys(data.recipe);
+    for (let i:number = 0; i < recipeKeys.length; i++) {
+        let r:any = data.recipe[recipeKeys[i]];
         if (r.result) {
             r.results = [
                 {
                     amount: r.result_count,
                     name: r.result,
-                    type: cfgd.findCraftableByName(r.result).type
-                }
+                    type: cfgd.findCraftableByName(r.result).type,
+                },
             ];
 
             delete r.result;
             delete r.result_count;
         } else if (r.results) {
-            var rslts = [];
+            let rslts:any[] = [];
 
-            for (var j = 0; j < r.results.length; j++) {
-                var rslt = r.results[j];
+            for (let j:number = 0; j < r.results.length; j++) {
+                let rslt:any = r.results[j];
 
                 if (rslt["1"]) {
                     rslts.push({
-                        name: rslt["1"],
                         amount: rslt["2"],
-                        type: cfgd.findCraftableByName(rslt["1"]).type
-                    })
+                        name: rslt["1"],
+                        type: cfgd.findCraftableByName(rslt["1"]).type,
+                    });
                 } else {
-                    rslts.push(rslt)
+                    rslts.push(rslt);
                 }
             }
 
@@ -78,54 +86,58 @@ function unifyRecipeResults(cfgd) {
     }
 }
 
-function unifyRecipeIngredients(cfgd) {
-    var data = cfgd.data;
-    var recipeKeys = Object.keys(data.recipe);
-    for (var i = 0; i < recipeKeys.length; i++) {
-        var r = data.recipe[recipeKeys[i]];
+function unifyRecipeIngredients(cfgd:ConfigData):void {
+    "use strict";
+
+    let data:any = cfgd.data;
+    let recipeKeys:string[] = Object.keys(data.recipe);
+    for (let i:number = 0; i < recipeKeys.length; i++) {
+        let r:any = data.recipe[recipeKeys[i]];
 
         if (r.ingredients.length && r.ingredients[0]["1"]) {
-            var fixed_ingredients = [];
+            let fixedIngredients:any[] = [];
 
-            for (var j = 0; j < r.ingredients.length; j++) {
-                var ingd = r.ingredients[j];
+            for (let j:number = 0; j < r.ingredients.length; j++) {
+                let ingd:any = r.ingredients[j];
 
                 if (ingd["1"]) {
-                    fixed_ingredients.push({
-                        name: ingd["1"],
+                    fixedIngredients.push({
                         amount: ingd["2"],
-                        type: cfgd.findCraftableByName(ingd["1"]).type
-                    })
+                        name: ingd["1"],
+                        type: cfgd.findCraftableByName(ingd["1"]).type,
+                    });
                 } else {
-                    fixed_ingredients.push(ingd)
+                    fixedIngredients.push(ingd);
                 }
             }
 
-            r.ingredients = fixed_ingredients;
+            r.ingredients = fixedIngredients;
         }
     }
 }
 
-function augmentTech(cfgd) {
-    var data = cfgd.data;
-    var techKeys = Object.keys(data.technology);
-    var recipeKeys = Object.keys(data.recipe);
+function augmentTech(cfgd:ConfigData):void {
+    "use strict";
 
-    for (var keyIdx = 0; keyIdx < techKeys.length; keyIdx++) {
+    let data:any = cfgd.data;
+    let techKeys:string[] = Object.keys(data.technology);
+    let recipeKeys:string[] = Object.keys(data.recipe);
+
+    for (let keyIdx:number = 0; keyIdx < techKeys.length; keyIdx++) {
         data.technology[techKeys[keyIdx]].allows = [];
     }
 
-    for (var keyIdx = 0; keyIdx < recipeKeys.length; keyIdx++) {
+    for (let keyIdx:number = 0; keyIdx < recipeKeys.length; keyIdx++) {
         data.recipe[recipeKeys[keyIdx]].unlock_by = [];
     }
 
-    for (var keyIdx = 0; keyIdx < techKeys.length; keyIdx++) {
-        var tech = data.technology[techKeys[keyIdx]];
+    for (let keyIdx:number = 0; keyIdx < techKeys.length; keyIdx++) {
+        let tech:any = data.technology[techKeys[keyIdx]];
 
-        for (var i = 0; tech.effects && i < tech.effects.length; i++) {
-            var effect = tech.effects[i];
+        for (let i:number = 0; tech.effects && i < tech.effects.length; i++) {
+            let effect:any = tech.effects[i];
 
-            if (effect.type == "unlock-recipe") {
+            if (effect.type === "unlock-recipe") {
                 cfgd.recipeTechUnlock[effect.recipe] = tech.name;
                 if (data.recipe[effect.recipe]) { // some tech unlock non-existent recipes
                     data.recipe[effect.recipe].unlock_by.push(tech.name);
@@ -133,23 +145,25 @@ function augmentTech(cfgd) {
             }
         }
 
-        for (var i = 0; tech.prerequisites && i < tech.prerequisites.length; i++) {
-            var prereq = tech.prerequisites[i];
+        for (let i:number = 0; tech.prerequisites && i < tech.prerequisites.length; i++) {
+            let prereq:any = tech.prerequisites[i];
             data.technology[prereq].allows.push(tech.name);
         }
     }
 }
 
-function mapAssemblers(cfgd) {
-    var data = cfgd.data;
-    var keysAssem = Object.keys(data['assembling-machine']);
-    var keysFurn = Object.keys(data.furnace);
-    var result = {};
+function mapAssemblers(cfgd:ConfigData):any {
+    "use strict";
 
-    function work(crafter) {
-        var ccKeys = Object.keys(crafter.crafting_categories);
-        for (var ci = 0; ci < ccKeys.length; ci++) {
-            var cat = crafter.crafting_categories[ccKeys[ci]];
+    let data:any = cfgd.data;
+    let keysAssem:string[] = Object.keys(data["assembling-machine"]);
+    let keysFurn:string[] = Object.keys(data.furnace);
+    let result:any = {};
+
+    function work(crafter:any):void {
+        let ccKeys:string[] = Object.keys(crafter.crafting_categories);
+        for (let ci:number = 0; ci < ccKeys.length; ci++) {
+            let cat:any = crafter.crafting_categories[ccKeys[ci]];
             if (!result[cat]) {
                 result[cat] = [crafter];
             } else {
@@ -158,55 +172,61 @@ function mapAssemblers(cfgd) {
         }
     }
 
-    for (var i = 0; i < keysAssem.length; i++) {
-        var assem = data['assembling-machine'][keysAssem[i]];
+    for (let i:number = 0; i < keysAssem.length; i++) {
+        let assem:any = data["assembling-machine"][keysAssem[i]];
         work(assem);
     }
 
-    for (var i = 0; i < keysFurn.length; i++) {
-        var assem = data['furnace'][keysFurn[i]];
+    for (let i:number = 0; i < keysFurn.length; i++) {
+        let assem:any = data.furnace[keysFurn[i]];
         work(assem);
     }
 
-    //console.log(result);
+    // console.log(result);
 
     return result;
 }
 
-function mapRecipeCatAssemblers(cfgd, craftCatMap) {
-    var data = cfgd.data;
-    var keysRecipe = Object.keys(data.recipe);
-    var results = [];
+function mapRecipeCatAssemblers(cfgd:ConfigData, craftCatMap:any):any[] {
+    "use strict";
 
-    for (var i = 0; i < keysRecipe.length; i++) {
-        var r = data.recipe[keysRecipe[i]];
+    let data:any = cfgd.data;
+    let keysRecipe:string[] = Object.keys(data.recipe);
+    let results:any[] = [];
+
+    for (let i:number = 0; i < keysRecipe.length; i++) {
+        let r:any = data.recipe[keysRecipe[i]];
         r.assemblerMap = craftCatMap[r.category];
     }
 
     return results;
 }
 
-function attachLocaleToData(cfgd):void {
-    var data = cfgd.data;
+function attachLocaleToData(cfgd:ConfigData):void {
+    "use strict";
 
-    var keysData = Object.keys(data);
+    let data:any = cfgd.data;
 
-    for (var i = 0; i < keysData.length; i++) {
-        var key = keysData[i];
-        var keys = Object.keys(data[key]);
-        for (var j = 0; j < keys.length; j++) {
-            var item = data[key][keys[j]];
+    let keysData:string[] = Object.keys(data);
+
+    for (let i:number = 0; i < keysData.length; i++) {
+        let key:string = keysData[i];
+        let keys:string[] = Object.keys(data[key]);
+        for (let j:number = 0; j < keys.length; j++) {
+            let item:any = data[key][keys[j]];
             item.name = item.name.toLowerCase();
             item.title = cfgd.findTitle(item.name);
         }
     }
 }
 
-export function covertToList(someData) {
-    var keys = Object.keys(someData);
-    var result = [];
+export function covertToList(someData:any):any[] {
+    "use strict";
 
-    for (var i = 0; i < keys.length; i++) {
+    let keys:string[] = Object.keys(someData);
+    let result:any[] = [];
+
+    for (let i:number = 0; i < keys.length; i++) {
         result.push(someData[keys[i]]);
     }
 

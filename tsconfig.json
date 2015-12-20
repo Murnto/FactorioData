@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "out": "build.js",
+    "target": "es3",
+    "outDir": "built",
+    "rootDir": "built",
+    "sourceMap": false
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "helpers.ts",
+    "routes/factoratio.ts",
+    "routes/api.ts",
+    "routes/index.ts",
+    "routes/itemcats.ts",
+    "routes/mod_selection.ts",
+    "src/git_locals.ts",
+    "src/factorio_data.ts",
+    "src/category_data.ts",
+    "src/config_data.ts",
+    "src/data_augmentation.ts",
+    "app.ts",
+    "build.ts"
+  ]
+}

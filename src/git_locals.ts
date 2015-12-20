@@ -1,10 +1,15 @@
-var git = require('git-rev-sync');
+/// <reference path="../typings/tsd.d.ts" />
 
-var gitShort = git.short();
+import * as express from "express";
+import git = require("git-rev-sync");
 
-function addLocals(req, res, next) {
+let gitShort:string = git.short();
+
+function addLocals(req:express.Request, res:express.Response, next:Function):void {
+    "use strict";
+
     res.locals.git_short = gitShort;
     next();
 }
 
-export = addLocals
+export = addLocals;
