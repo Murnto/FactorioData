@@ -18,6 +18,17 @@ function listEntries(e:any[]):string {
     return result;
 }
 
+function clamp(min:number, max:number, value:number):number {
+    "use strict";
+
+    if (value < min) {
+        return min;
+    } else if (value > max) {
+        return max;
+    }
+    return value;
+}
+
 let ENERGY_SOURCE_W_EMISSIONS:any = {
     "emissions": "Emissions",
     "type": "Energy type",
@@ -398,7 +409,7 @@ export function getCategories():any {
                 "map_color": [
                     "Map color",
                     function (e:{r:number, g:number, b:number}):string {
-                        let hexColor:string = Number(0x1000000 + Math.round(e.r * 255) * 0x10000 + Math.round(e.g * 255) * 0x100 + Math.round(e.b * 255)).toString(16).substring(1).toUpperCase();
+                        let hexColor:string = Number(0x1000000 + Math.round(clamp(0, 1, e.r) * 255) * 0x10000 + Math.round(clamp(0, 1, e.g) * 255) * 0x100 + Math.round(clamp(0, 1, e.b) * 255)).toString(16).substring(1).toUpperCase();
 
                         return "<div class=\"cat-resource-color\" style=\"background: #" + hexColor + "\"></div>&nbsp;#" + hexColor;
                     },
