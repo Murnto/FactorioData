@@ -87,6 +87,10 @@ function extractData(data:any, info:any, colData:any):void {
             let colEntry:any;
             if (Array.isArray(obj)) {
                 colEntry = obj[1](data[k]);
+
+                if (obj[2] === true) { // hacky
+                    colEntry = {data: colEntry, raw: true};
+                }
             } else {
                 colEntry = data[k];
                 if (colEntry * 1 === colEntry) {

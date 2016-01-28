@@ -17,4 +17,7 @@ block content
                         td
                             a(href=itemUrl(item.type, item.name))= (item.title || item.name)
                         for j in Object.keys(headers)
-                            td= item[j]
+                            if item[j] && item[j].raw
+                                td!= item[j].data
+                            else
+                                td= item[j]

@@ -398,9 +398,11 @@ export function getCategories():any {
                 "map_color": [
                     "Map color",
                     function (e:{r:number, g:number, b:number}):string {
-                        // return Number(0x1000000 + Math.round(e.r * 255)*0x10000 + Math.round(e.g * 255)*0x100 + Math.round(e.b * 255)).toString(16).substring(1);
-                        return Number(0x1000000 + Math.round(e.r * 255) * 0x10000 + Math.round(e.g * 255) * 0x100 + Math.round(e.b * 255)).toString(16).substring(1).toUpperCase();
+                        let hexColor:string = Number(0x1000000 + Math.round(e.r * 255) * 0x10000 + Math.round(e.g * 255) * 0x100 + Math.round(e.b * 255)).toString(16).substring(1).toUpperCase();
+
+                        return "<div class=\"cat-resource-color\" style=\"background: #" + hexColor + "\"></div>&nbsp;#" + hexColor;
                     },
+                    true, // raw
                 ],
             },
         },
