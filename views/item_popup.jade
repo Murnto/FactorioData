@@ -1,5 +1,5 @@
 div
-    img.r-cat(src!=itemGroupImage(item.subgroup))
+    img.r-cat(src!=itemGroupImage((recipe && recipe.subgroup) || item.subgroup))
     if recipe
         div Time: #{ recipe.energy_required }
         .ingredients
