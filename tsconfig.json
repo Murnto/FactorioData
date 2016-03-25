@@ -2,10 +2,9 @@
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitAny": true,
-    "out": "build.js",
     "target": "es3",
     "outDir": "built",
-    "rootDir": "built",
+    "rootDir": "",
     "sourceMap": false
   },
   "exclude": [

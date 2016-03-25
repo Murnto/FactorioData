@@ -40,6 +40,10 @@ router.get("/tech/:name", function (req:express.Request, res:express.Response, n
     let name:string = req.params.name;
 
     let tech:any = FData.getPack(res.locals.modpack).data.technology[name];
+    if (!tech) {
+        return next();
+    }
+
     let prereqTitles:any[] = [];
     let allowsTitles:any[] = [];
 
@@ -49,7 +53,8 @@ router.get("/tech/:name", function (req:express.Request, res:express.Response, n
         }
 
         prereq = tech.prerequisites[prereq];
-        prereqTitles.push(FData.getPack(res.locals.modpack).data.technology[prereq].title || prereq);
+        prereqTitles.push(FData.getPack(res.locals.modpack).data.technology[prereq].title &&
+            FData.getPack(res.locals.modpack).data.technology[prereq].title || prereq);
     }
 
     for (let allow in tech.allows) {
@@ -58,7 +63,8 @@ router.get("/tech/:name", function (req:express.Request, res:express.Response, n
         }
 
         allow = tech.allows[allow];
-        allowsTitles.push(FData.getPack(res.locals.modpack).data.technology[allow].title || allow);
+        allowsTitles.push(FData.getPack(res.locals.modpack).data.technology[allow] &&
+            FData.getPack(res.locals.modpack).data.technology[allow].title || allow);
     }
 
     res.render("technology", {
