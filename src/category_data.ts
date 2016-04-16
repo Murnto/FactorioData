@@ -86,10 +86,18 @@ function extractData(data:any, info:any, colData:any):void {
         } else {
             let colEntry:any;
             if (Array.isArray(obj)) {
-                colEntry = obj[1](data[k]);
+                if (typeof obj[1] === "string") {
+                    if (obj[1] === "round") {
+                        colEntry = round(data[k] * 1, obj[2]);
+                    } else {
+                        throw Error("Unimplemented category data function '" + obj[1] + "'");
+                    }
+                } else {
+                    colEntry = obj[1](data[k]);
 
-                if (obj[2] === true) { // hacky
-                    colEntry = {data: colEntry, raw: true};
+                    if (obj[2] === true) { // hacky
+                        colEntry = {data: colEntry, raw: true};
+                    }
                 }
             } else {
                 colEntry = data[k];

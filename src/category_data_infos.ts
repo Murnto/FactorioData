@@ -124,8 +124,23 @@ export function getCategories():any {
             "info": {},
         },
         "car": {
-            "name": "car",
-            "info": {},
+            "name": "Cars",
+            "info": {
+                "energy_per_hit_point": "Energy per hit point",
+                "effectivity": "Effectivity",
+                "stop_trigger_speed": "Stop trigger speed",
+                "terrain_friction_modifier": "Terrain friction modifier",
+                "max_health": "Max health",
+                "braking_power": "Braking power",
+                "consumption": "Consumption",
+                "weight": "Weight",
+                "friction": ["Friction", "round", 3],
+                "inventory_size": "Inventory size",
+                "burner": {
+                    "effectivity": "Burner effectivity",
+                    "fuel_inventory_size": "Fuel inventory size",
+                },
+            },
         },
         "cargo-wagon": {
             "name": "cargo-wagon",
@@ -270,8 +285,25 @@ export function getCategories():any {
             "info": {},
         },
         "locomotive": {
-            "name": "locomotive",
-            "info": {},
+            "name": "Locomotives",
+            "info": {
+                "braking_force": "Braking force",
+                "energy_per_hit_point": "Energy per hp",
+                "air_resistance": "Air resistance",
+                "rail_category": "Rail category",
+                "weight": "Weight",
+                "max_speed": "Max speed",
+                "max_power": "Max power",
+                "max_health": "Max health",
+                "joint_distance": "Joint distance",
+                "connection_distance": "Connection distance",
+                "energy_source": {
+                    "emissions": "Emissions",
+                    "effectivity": "Effectivity",
+                    "type": "Type",
+                    "fuel_inventory_size": "Fuel inv size",
+                },
+            },
         },
         "logistic-container": {
             "name": "logistic-container",
