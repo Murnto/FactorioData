@@ -33,7 +33,7 @@ tr
 
             if key != keys[keys.length - 1]
                 br
-
+    td= r.energy_required ? r.energy_required : 0.5
     td
         each unlock in r.unlock_by
             a(href="/pack/#{ modpack }/tech/#{ unlock }")
