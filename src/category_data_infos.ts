@@ -194,10 +194,10 @@ export function getCategories():any {
             "name": "fish",
             "info": {},
         },
-        "flame-thrower-explosion": {
-            "name": "flame-thrower-explosion",
-            "info": {},
-        },
+        // "flame-thrower-explosion": {
+        //    "name": "flame-thrower-explosion",
+        //    "info": {},
+        // },
         "fluid": {
             "name": "fluid",
             "info": {},
@@ -512,10 +512,10 @@ export function getCategories():any {
             "name": "transport-belt",
             "info": {},
         },
-        "transport-belt-to-ground": {
-            "name": "transport-belt-to-ground",
-            "info": {},
-        },
+        // "transport-belt-to-ground": {
+        //    "name": "transport-belt-to-ground",
+        //    "info": {},
+        // },
         "tree": {
             "name": "tree",
             "info": {},
