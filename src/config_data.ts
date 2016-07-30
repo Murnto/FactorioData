@@ -20,6 +20,8 @@ let ENTITY_TYPES:string[] = [
     "blueprint",
     "deconstruction-item",
     "repair-tool",
+    "rail-planner",
+    "blueprint-book",
 ];
 
 export interface IConfigInfo {
