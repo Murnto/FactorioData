@@ -6,14 +6,10 @@ block content
             thead
                 tr
                     th Name
-                    th Version
-                    th Description
                     th Mods
             tbody
                 each pack in packInfos
                     tr
-                        td
+                        td(nowrap="nowrap")
                             a(href="/pack/#{ pack.name }")= pack.title
-                        td= pack.version
-                        td= pack.description
-                        td= pack.mods.join(', ')
+                        td= pack.mods.map(function(x) { return x.title; }).join(', ')
